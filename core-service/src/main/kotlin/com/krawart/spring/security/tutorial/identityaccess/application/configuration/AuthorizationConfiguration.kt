@@ -1,6 +1,6 @@
-package com.krawart.spring.security.tutorial.security.application.configuration
+package com.krawart.spring.security.tutorial.identityaccess.application.configuration
 
-import com.krawart.spring.security.tutorial.security.domain.UserRole
+import com.krawart.spring.security.tutorial.identityaccess.domain.UserRole
 import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -31,6 +31,7 @@ class AuthorizationConfiguration(
         http!!.authorizeRequests()
             .antMatchers("/user/**").hasAuthority(UserRole.USER.name)
             .antMatchers("/admin/**").hasAuthority(UserRole.ADMIN.name)
+            .antMatchers("/sign-up", "/user/register").permitAll()
             .anyRequest().authenticated()
 
         http.formLogin().permitAll()

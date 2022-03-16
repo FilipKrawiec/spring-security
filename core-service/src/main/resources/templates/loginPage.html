@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+  <head th:replace="layout/head :: head('Log in')"></head>
 
-<head th:replace="layout/head :: head('Log in')"></head>
+  <body
+    class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center bg-light"
+  >
+    <div class="card text-center px-2 py-3 mb-3" style="width: 20rem">
+      <h1>Welcome</h1>
+      <p>Login to proceed</p>
 
-<body class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center bg-light">
-
-<div class="card text-center px-2 py-3 mb-3" style="width: 20rem">
-    <h1>Welcome</h1>
-    <p>Login to proceed</p>
-
-    <div class="card-body">
-        <form th:action="@{/login/process}" method="post" class="form-horizontal">
-            <div class="mb-3">
-                <label class="form-label" for="username"> Username:</label>
-                <div class="col-xs-10">
-                    <input id="username" type="text" name="username" class="form-control text-center" />
-                </div>
+      <div class="card-body">
+        <form
+          th:action="@{/login/process}"
+          method="post"
+          class="form-horizontal"
+        >
+          <div class="mb-3">
+            <label class="form-label" for="username"> Username:</label>
+            <div class="col-xs-10">
+              <input
+                id="username"
+                type="text"
+                name="username"
+                class="form-control text-center"
+              />
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="password" > Password: </label>
-                <div class="col-xs-10">
-                    <input id="password" type="password" name="password" class="form-control text-center" />
-                </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password"> Password: </label>
+            <div class="col-xs-10">
+              <input
+                id="password"
+                type="password"
+                name="password"
+                class="form-control text-center"
+              />
             </div>
-            <div class="form-actions mt-5">
-                <input type="submit" class="btn btn-primary w-100" value="Log In" />
-            </div>
+          </div>
+          <div class="form-actions mt-5">
+            <input type="submit" class="btn btn-primary w-100" value="Log In" />
+          </div>
+          <div class="mt-3">
+            <a th:href="@{/sign-up}" type="button" class="btn w-100">Sign up</a>
+          </div>
         </form>
+      </div>
     </div>
-</div>
 
-<div th:if="${param.error}" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}" class="text-danger">Login Error</div>
-<div th:if="${message}" th:text="${message}" class="text-success">Message</div>
-<div th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger">Error Message</div>
-<div th:if="${param.logout}" class="text-success">You have been logged out.</div>
-
-</body>
+    <div
+      th:if="${param.error}"
+      th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"
+      class="text-danger"
+    >
+      Login Error
+    </div>
+    <div th:if="${message}" th:text="${message}" class="text-success">
+      Message
+    </div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger">
+      Error Message
+    </div>
+    <div th:if="${param.logout}" class="text-success">
+      You have been logged out.
+    </div>
+  </body>
 </html>

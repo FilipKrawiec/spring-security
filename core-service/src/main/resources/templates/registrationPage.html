@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+  <head th:replace="layout/head :: head('Log in')"></head>
+
+  <body
+    class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center bg-light"
+  >
+    <div class="card text-center px-2 py-3 mb-3" style="width: 20rem">
+      <h1>Sign up</h1>
+      <p>Please fill all fields</p>
+
+      <div class="card-body">
+        <form
+          th:action="@{/user/register}"
+          th:object="${user}"
+          action="#"
+          method="post"
+          class="form-horizontal"
+        >
+          <div
+            class="mb-3"
+            th:classappend="${#fields.hasErrors('email')} ? 'has-error'"
+          >
+            <label class="form-label" for="email"> Email:</label>
+            <div class="col-xs-10">
+              <input
+                id="email"
+                type="email"
+                title="email"
+                name="email"
+                th:field="*{email}"
+                class="form-control text-center"
+              />
+            </div>
+          </div>
+          <div
+            class="mb-3"
+            th:classappend="${#fields.hasErrors('password')} ? 'has-error'"
+          >
+            <label class="form-label" for="password"> Password: </label>
+            <div class="col-xs-10">
+              <input
+                id="password"
+                type="password"
+                title="password"
+                name="password"
+                th:field="*{password}"
+                class="form-control text-center"
+              />
+            </div>
+          </div>
+          <div
+            class="mb-3"
+            th:classappend="${#fields.hasErrors('passwordConfirmation')} ? 'has-error'"
+          >
+            <label class="form-label" for="passwordConfirmation">
+              Password confirmation:
+            </label>
+            <div class="col-xs-10">
+              <input
+                id="passwordConfirmation"
+                type="password"
+                title="passwordConfirmation"
+                name="passwordConfirmation"
+                th:field="*{passwordConfirmation}"
+                class="form-control text-center"
+              />
+              <span
+                th:if="${#fields.hasErrors('passwordConfirmation')}"
+                th:errors="*{passwordConfirmation}"
+                class="help-block"
+                >Password Confirmation Error</span
+              >
+            </div>
+          </div>
+          <div class="form-actions mt-5">
+            <input
+              type="submit"
+              class="btn btn-primary w-100"
+              value="Sign Up"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      th:if="${param.error}"
+      th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"
+      class="text-danger"
+    >
+      Login Error
+    </div>
+    <div th:if="${message}" th:text="${message}" class="text-success">
+      Message
+    </div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger">
+      Error Message
+    </div>
+    <div th:if="${param.logout}" class="text-success">
+      You have been logged out.
+    </div>
+  </body>
+</html>
