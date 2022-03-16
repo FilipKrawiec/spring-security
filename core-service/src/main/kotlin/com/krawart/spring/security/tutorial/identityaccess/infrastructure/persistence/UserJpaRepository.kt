@@ -9,4 +9,12 @@ internal class UserJpaRepository(val userDao: UserDao) : UserRepository {
     override fun add(user: User): User {
         return userDao.save(user)
     }
+
+    override fun findByEmail(email: String): User? {
+        return userDao.findByEmail(email)
+    }
+
+    override fun existsByEmail(email: String): Boolean {
+        return userDao.existsByEmail(email)
+    }
 }
