@@ -8,3 +8,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/krawart_security
     username: admin
     password: password
+  thymeleaf:
+    cache: false
