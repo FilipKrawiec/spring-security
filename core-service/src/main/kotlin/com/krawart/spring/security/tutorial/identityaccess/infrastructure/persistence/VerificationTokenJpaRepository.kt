@@ -9,7 +9,7 @@ internal class VerificationTokenJpaRepository(
     private val verificationTokenDao: VerificationTokenDao
 ) : VerificationTokenRepository {
 
-    override fun add(entity: VerificationToken): VerificationToken {
+    override fun save(entity: VerificationToken): VerificationToken {
         return verificationTokenDao.save(entity)
     }
 

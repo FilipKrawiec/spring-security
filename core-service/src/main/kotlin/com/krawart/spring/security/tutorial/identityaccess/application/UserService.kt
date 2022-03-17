@@ -1,12 +1,16 @@
 package com.krawart.spring.security.tutorial.identityaccess.application
 
 import com.krawart.spring.security.tutorial.identityaccess.application.command.AddUserCommand
+import com.krawart.spring.security.tutorial.identityaccess.application.command.UpdateUserPasswordCommand
 import com.krawart.spring.security.tutorial.identityaccess.application.command.VerifyUserCommand
+import com.krawart.spring.security.tutorial.identityaccess.domain.PasswordResetTokenRepository
 import com.krawart.spring.security.tutorial.identityaccess.domain.User
 import com.krawart.spring.security.tutorial.identityaccess.domain.UserRepository
 import com.krawart.spring.security.tutorial.identityaccess.domain.VerificationTokenRepository
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.EmailAlreadyUsedException
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.VerificationTokenExpiredException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -20,11 +24,12 @@ import javax.persistence.EntityNotFoundException
 @Service
 @Transactional
 class UserService(
-    val passwordEncoder: PasswordEncoder,
-    val verificationTokenService: VerificationTokenService,
-    val verificationTokenRepository: VerificationTokenRepository,
-    val verificationTokenEmailService: VerificationTokenEmailService,
-    val userRepository: UserRepository
+    private val passwordEncoder: PasswordEncoder,
+    private val verificationTokenService: VerificationTokenService,
+    private val verificationTokenRepository: VerificationTokenRepository,
+    private val verificationTokenEmailService: VerificationTokenEmailService,
+    private val passwordResetTokenRepository: PasswordResetTokenRepository,
+    private val userRepository: UserRepository
 ) : UserDetailsService {
 
     @Transactional(readOnly = true)
@@ -69,6 +74,22 @@ class UserService(
         user.enabled = true
 
         return userRepository.save(user)
+    }
+
+    fun impersonateUserByResetPasswordTokenValue(token: String) {
+        val passwordResetToken = passwordResetTokenRepository.findByToken(token)
+            ?: throw EntityNotFoundException("Password reset token not found")
+
+        val user = passwordResetToken.user
+
+        SecurityContextHolder.getContext().authentication =
+            UsernamePasswordAuthenticationToken(user, null, loadUserByUsername(user.email).authorities)
+    }
+
+    fun updateCurrentUserPassword(command: UpdateUserPasswordCommand) {
+        val user = SecurityContextHolder.getContext().authentication.principal as User
+        user.password = passwordEncoder.encode(command.password)
+        userRepository.save(user)
     }
 }
 

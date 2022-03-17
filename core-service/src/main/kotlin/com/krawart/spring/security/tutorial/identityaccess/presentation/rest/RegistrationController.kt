@@ -23,7 +23,7 @@ class RegistrationController(
     @GetMapping("sign-up")
     fun registrationPage(): ModelAndView = ModelAndView("registrationPage", "body", RegisterUserRequestBody())
 
-    @PostMapping("user/register")
+    @PostMapping("users/register")
     fun registerUser(
         @Valid @ModelAttribute("body") body: RegisterUserRequestBody,
         result: BindingResult
