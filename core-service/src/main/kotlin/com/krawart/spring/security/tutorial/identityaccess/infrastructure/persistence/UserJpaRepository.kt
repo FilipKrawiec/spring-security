@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 internal class UserJpaRepository(val userDao: UserDao) : UserRepository {
-    override fun add(user: User): User {
+    override fun save(user: User): User {
         return userDao.save(user)
     }
 

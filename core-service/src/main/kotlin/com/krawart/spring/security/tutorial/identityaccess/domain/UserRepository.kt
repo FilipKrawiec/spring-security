@@ -1,7 +1,7 @@
 package com.krawart.spring.security.tutorial.identityaccess.domain
 
 interface UserRepository {
-    fun add(user: User) : User
+    fun save(user: User) : User
 
     fun findByEmail(email: String) : User?
 

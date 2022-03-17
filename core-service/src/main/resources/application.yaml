@@ -1,0 +1,3 @@
+tutorial:
+  verification-token:
+    expiration-offset-in-seconds: 259200

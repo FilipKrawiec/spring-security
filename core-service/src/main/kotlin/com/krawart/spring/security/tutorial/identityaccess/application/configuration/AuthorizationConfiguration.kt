@@ -23,7 +23,7 @@ class AuthorizationConfiguration(
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
-            .antMatchers("/sign-up", "/user/register").permitAll()
+            .antMatchers("/sign-up", "/user/register", "/registration-confirmation").permitAll()
             .antMatchers("/user/**").hasAuthority(UserRole.USER.name)
             .antMatchers("/admin/**").hasAuthority(UserRole.ADMIN.name)
             .anyRequest().authenticated()

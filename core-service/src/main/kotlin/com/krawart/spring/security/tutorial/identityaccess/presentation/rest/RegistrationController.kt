@@ -2,18 +2,22 @@ package com.krawart.spring.security.tutorial.identityaccess.presentation.rest
 
 import com.krawart.spring.security.tutorial.identityaccess.application.UserService
 import com.krawart.spring.security.tutorial.identityaccess.application.command.AddUserCommand
+import com.krawart.spring.security.tutorial.identityaccess.application.command.VerifyUserCommand
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.EmailAlreadyUsedException
+import com.krawart.spring.security.tutorial.identityaccess.domain.exception.VerificationTokenExpiredException
 import com.krawart.spring.security.tutorial.identityaccess.presentation.rest.requestbody.RegisterUserRequestBody
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.persistence.EntityNotFoundException
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/")
 class RegistrationController(
-    val userService: UserService
+    val userService: UserService,
 ) {
 
     @GetMapping("sign-up")
@@ -38,6 +42,19 @@ class RegistrationController(
             return ModelAndView("registrationPage", "body", body)
         }
 
+        return ModelAndView("redirect:/login")
+    }
+
+    @GetMapping("registration-confirmation")
+    fun confirmRegistration(@RequestParam token: String, redirectAttributes: RedirectAttributes): ModelAndView {
+        try {
+            userService.verifyUser(VerifyUserCommand(token))
+            redirectAttributes.addFlashAttribute("message", "Your account verified successfully")
+        } catch (e: EntityNotFoundException) {
+            redirectAttributes.addFlashAttribute("message", "Unable to process provided access token")
+        } catch (e: VerificationTokenExpiredException) {
+            redirectAttributes.addFlashAttribute("message", "Verification token has expired")
+        }
         return ModelAndView("redirect:/login")
     }
 }
