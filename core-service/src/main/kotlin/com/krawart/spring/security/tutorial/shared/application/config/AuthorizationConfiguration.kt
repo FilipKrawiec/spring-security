@@ -1,4 +1,4 @@
-package com.krawart.spring.security.tutorial.identityaccess.application.configuration
+package com.krawart.spring.security.tutorial.shared.application.config
 
 import com.krawart.spring.security.tutorial.identityaccess.application.UserService
 import com.krawart.spring.security.tutorial.identityaccess.domain.UserRole
@@ -23,9 +23,18 @@ class AuthorizationConfiguration(
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
-            .antMatchers("/sign-up", "/user/register", "/registration-confirmation").permitAll()
+            .antMatchers(
+                "/sign-up",
+                "/users/register",
+                "/users/reset-password",
+                "/registration-confirmation",
+                "/forgot-password"
+            ).permitAll()
+
             .antMatchers("/user/**").hasAuthority(UserRole.USER.name)
+
             .antMatchers("/admin/**").hasAuthority(UserRole.ADMIN.name)
+
             .anyRequest().authenticated()
 
         http.formLogin().permitAll()

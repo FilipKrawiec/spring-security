@@ -17,7 +17,7 @@ class VerificationTokenService(
     ) {
 
     fun generateVerificationTokenForRegisteredUser(user: User): VerificationToken {
-        return verificationTokenRepository.add(
+        return verificationTokenRepository.save(
             VerificationToken(
                 id = UUID.randomUUID(),
                 token = generateVerificationTokenValue(),
