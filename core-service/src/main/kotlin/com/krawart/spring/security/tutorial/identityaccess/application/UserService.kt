@@ -6,7 +6,6 @@ import com.krawart.spring.security.tutorial.identityaccess.application.command.V
 import com.krawart.spring.security.tutorial.identityaccess.domain.*
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.EmailAlreadyUsedException
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.VerificationTokenExpiredException
-import com.krawart.spring.security.tutorial.identityaccess.presentation.mail.DummyVerificationTokenEmailService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails

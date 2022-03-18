@@ -5,7 +5,6 @@ import com.krawart.spring.security.tutorial.identityaccess.domain.PasswordResetT
 import com.krawart.spring.security.tutorial.identityaccess.domain.PasswordResetTokenEmailService
 import com.krawart.spring.security.tutorial.identityaccess.domain.PasswordResetTokenRepository
 import com.krawart.spring.security.tutorial.identityaccess.domain.UserRepository
-import com.krawart.spring.security.tutorial.identityaccess.presentation.mail.DummyPasswordResetTokenEmailService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
