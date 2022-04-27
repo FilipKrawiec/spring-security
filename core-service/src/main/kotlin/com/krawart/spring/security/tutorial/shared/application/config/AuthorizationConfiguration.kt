@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
@@ -15,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @RequiredArgsConstructor
 class AuthorizationConfiguration(
     private val userService: UserService,
+    private val rememberMeTokenDao: PersistentTokenRepository
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(auth: AuthenticationManagerBuilder) {
@@ -48,6 +50,7 @@ class AuthorizationConfiguration(
             // .useSecureCookie(true) // Only for https connection
             .rememberMeCookieName("sticky-cookie") // Name of cookie in browser
             .rememberMeParameter("remember") // Client parameter name
+            .tokenRepository(rememberMeTokenDao) // Uses persisted value to validate
 
             .and().logout().permitAll()
             .logoutRequestMatcher(AntPathRequestMatcher("/logout/process", "POST"))
