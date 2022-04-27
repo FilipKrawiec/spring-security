@@ -1,0 +1,5 @@
+tutorial:
+  verification-token:
+    expiration-offset-in-seconds: 259200
+  password-reset-token:
+    expiration-offset-in-seconds: 7200

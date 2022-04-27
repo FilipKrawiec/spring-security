@@ -1,4 +1,4 @@
-package com.krawart.spring.security.tutorial.security.application.configuration
+package com.krawart.spring.security.tutorial.shared.application.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

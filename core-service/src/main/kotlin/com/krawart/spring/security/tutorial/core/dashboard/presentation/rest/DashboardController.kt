@@ -1,4 +1,4 @@
-package com.krawart.spring.security.tutorial.dashboard.presentation.rest
+package com.krawart.spring.security.tutorial.core.dashboard.presentation.rest
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

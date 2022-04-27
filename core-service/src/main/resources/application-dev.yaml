@@ -2,9 +2,11 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/krawart_security
     username: admin
     password: password
+  thymeleaf:
+    cache: false
