@@ -41,6 +41,7 @@ class AuthorizationConfiguration(
             .loginProcessingUrl("/login/process")
             .loginPage("/login")
             .and().httpBasic()
+            .and().rememberMe()
             .and().logout().permitAll()
             .logoutRequestMatcher(AntPathRequestMatcher("/logout/process", "POST"))
     }
