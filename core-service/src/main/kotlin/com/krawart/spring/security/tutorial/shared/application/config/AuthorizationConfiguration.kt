@@ -41,7 +41,14 @@ class AuthorizationConfiguration(
             .loginProcessingUrl("/login/process")
             .loginPage("/login")
             .and().httpBasic()
+
             .and().rememberMe()
+            .tokenValiditySeconds(604800) // One week in seconds
+            .key("lssAppKey") // Secret used to validate rm cookie
+            // .useSecureCookie(true) // Only for https connection
+            .rememberMeCookieName("sticky-cookie") // Name of cookie in browser
+            .rememberMeParameter("remember") // Client parameter name
+
             .and().logout().permitAll()
             .logoutRequestMatcher(AntPathRequestMatcher("/logout/process", "POST"))
     }
