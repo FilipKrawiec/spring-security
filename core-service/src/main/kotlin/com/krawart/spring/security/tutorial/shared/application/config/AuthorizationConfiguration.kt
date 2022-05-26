@@ -1,7 +1,7 @@
 package com.krawart.spring.security.tutorial.shared.application.config
 
 import com.krawart.spring.security.tutorial.identityaccess.application.UserService
-import com.krawart.spring.security.tutorial.identityaccess.domain.UserRole
+import com.krawart.spring.security.tutorial.identityaccess.domain.Authority
 import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -33,9 +33,9 @@ class AuthorizationConfiguration(
                 "/forgot-password"
             ).permitAll()
 
-            .antMatchers("/user/**").hasAuthority(UserRole.USER.name)
+            .antMatchers("/user/**").hasAuthority(Authority.USER.name)
 
-            .antMatchers("/admin/**").hasAuthority(UserRole.ADMIN.name)
+            .antMatchers("/admin/**").hasAuthority(Authority.ADMIN.name)
 
             .anyRequest().authenticated()
 

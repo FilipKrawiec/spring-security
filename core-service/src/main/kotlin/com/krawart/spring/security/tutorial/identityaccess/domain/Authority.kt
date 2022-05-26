@@ -1,5 +1,5 @@
 package com.krawart.spring.security.tutorial.identityaccess.domain
 
-enum class UserRole {
-    USER, ADMIN
+enum class Authority {
+    USER, ADMIN, DUMP
 }

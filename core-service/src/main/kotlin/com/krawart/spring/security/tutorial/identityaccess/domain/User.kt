@@ -1,10 +1,7 @@
 package com.krawart.spring.security.tutorial.identityaccess.domain
 
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "users")
@@ -13,4 +10,5 @@ class User(
     @Column(name = "email", nullable = false) val email: String,
     @Column(name = "password", nullable = false) var password: String,
     @Column(name = "is_enabled", nullable = false) var enabled: Boolean,
+    @Column(name = "authority", nullable = false) @Enumerated(EnumType.STRING) var authority: Authority,
 )

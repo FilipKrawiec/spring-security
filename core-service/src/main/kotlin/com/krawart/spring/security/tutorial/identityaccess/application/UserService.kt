@@ -7,6 +7,7 @@ import com.krawart.spring.security.tutorial.identityaccess.domain.*
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.EmailAlreadyUsedException
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.VerificationTokenExpiredException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -50,6 +51,7 @@ class UserService(
                 email = command.email,
                 password = passwordEncoder.encode(command.password),
                 enabled = false,
+                authority = Authority.USER
             )
         )
 
@@ -98,5 +100,5 @@ fun User.userDetails(): UserDetails =
         true,
         true,
         true,
-        emptyList(),
+        listOf(SimpleGrantedAuthority(this.authority.name)),
     )
