@@ -50,6 +50,7 @@ class UserService(
                 id = UUID.randomUUID(),
                 email = command.email,
                 password = passwordEncoder.encode(command.password),
+                secret = null,
                 enabled = false,
                 authority = Authority.USER
             )

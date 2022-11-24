@@ -2,6 +2,7 @@ package com.krawart.spring.security.tutorial.shared.application.config
 
 import com.krawart.spring.security.tutorial.identityaccess.domain.Authority
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -13,7 +14,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 class AuthorizationConfiguration(
     private val rememberMeTokenDao: PersistentTokenRepository,
     private val authenticationDetailsSource: CustomWebAuthenticationDetailsSource,
+    private val customAuthenticationProvider: CustomAuthenticationProvider,
 ) : WebSecurityConfigurerAdapter() {
+
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.authenticationProvider(customAuthenticationProvider)
+    }
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()

@@ -11,10 +11,9 @@ class CustomWebAuthenticationDetailsSource : AuthenticationDetailsSource<HttpSer
     override fun buildDetails(context: HttpServletRequest): WebAuthenticationDetails {
         return CustomWebAuthenticationDetails(context)
     }
-
-
-    data class CustomWebAuthenticationDetails(
-        val context: HttpServletRequest,
-        val verificationCode: String = context.getParameter("code"),
-    ) : WebAuthenticationDetails(context)
 }
+
+data class CustomWebAuthenticationDetails(
+    val context: HttpServletRequest,
+    val verificationCode: String = context.getParameter("code"),
+) : WebAuthenticationDetails(context)
