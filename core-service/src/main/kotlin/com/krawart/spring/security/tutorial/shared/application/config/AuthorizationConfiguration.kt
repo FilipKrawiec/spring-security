@@ -1,7 +1,6 @@
 package com.krawart.spring.security.tutorial.shared.application.config
 
 import com.krawart.spring.security.tutorial.identityaccess.domain.Authority
-import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -11,9 +10,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 class AuthorizationConfiguration(
-    private val rememberMeTokenDao: PersistentTokenRepository
+    private val rememberMeTokenDao: PersistentTokenRepository,
+    private val authenticationDetailsSource: CustomWebAuthenticationDetailsSource,
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
@@ -35,6 +34,7 @@ class AuthorizationConfiguration(
         http.formLogin().permitAll()
             .loginProcessingUrl("/login/process")
             .loginPage("/login")
+            .authenticationDetailsSource(authenticationDetailsSource)
             .and().httpBasic()
 
             .and().rememberMe()
