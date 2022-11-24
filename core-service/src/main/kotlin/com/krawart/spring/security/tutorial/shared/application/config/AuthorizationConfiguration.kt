@@ -14,12 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 class AuthorizationConfiguration(
     private val rememberMeTokenDao: PersistentTokenRepository,
     private val authenticationDetailsSource: CustomWebAuthenticationDetailsSource,
-    private val customAuthenticationProvider: CustomAuthenticationProvider,
 ) : WebSecurityConfigurerAdapter() {
-
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.authenticationProvider(customAuthenticationProvider)
-    }
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
@@ -28,7 +23,8 @@ class AuthorizationConfiguration(
                 "/users/register",
                 "/users/reset-password",
                 "/registration-confirmation",
-                "/forgot-password"
+                "/forgot-password",
+                "/code"
             ).permitAll()
 
             .antMatchers("/user/**").hasAuthority(Authority.USER.name)
@@ -37,10 +33,11 @@ class AuthorizationConfiguration(
 
             .anyRequest().authenticated()
 
-        http.formLogin().permitAll()
+        http.formLogin()
+            .authenticationDetailsSource(authenticationDetailsSource)
+            .permitAll()
             .loginProcessingUrl("/login/process")
             .loginPage("/login")
-            .authenticationDetailsSource(authenticationDetailsSource)
             .and().httpBasic()
 
             .and().rememberMe()

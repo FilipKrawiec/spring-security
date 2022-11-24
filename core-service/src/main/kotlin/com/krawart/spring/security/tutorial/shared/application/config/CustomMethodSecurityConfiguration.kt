@@ -10,7 +10,6 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User
 
 
 @Configuration
@@ -22,7 +21,14 @@ class CustomMethodSecurityConfiguration {
         override fun createSecurityExpressionRoot(
             authentication: Authentication,
             invocation: MethodInvocation
-        ): MethodSecurityExpressionOperations = CustomMethodSecurityExpressionRoot(authentication)
+        ): MethodSecurityExpressionOperations {
+            val root = CustomMethodSecurityExpressionRoot(authentication)
+            root.setPermissionEvaluator(permissionEvaluator)
+            root.setTrustResolver(trustResolver)
+            root.setRoleHierarchy(roleHierarchy)
+            root.setDefaultRolePrefix(defaultRolePrefix)
+            return root
+        }
     }
 
     inner class CustomMethodSecurityExpressionRoot(authentication: Authentication) :
@@ -48,7 +54,7 @@ class CustomMethodSecurityConfiguration {
         override fun getThis(): Any? = target
 
         @Suppress("unused")
-        fun isAdmin(): Boolean = (principal as User).authorities.contains(SimpleGrantedAuthority("ADMIN"))
+        fun isAdmin(): Boolean = (principal as Authentication).authorities.contains(SimpleGrantedAuthority("ADMIN"))
     }
 }
 

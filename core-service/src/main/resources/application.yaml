@@ -1,3 +1,11 @@
+spring:
+  application:
+    name: Krawat-Security
+
+security:
+  2-factor:
+    qr-prefix: https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=
+
 tutorial:
   verification-token:
     expiration-offset-in-seconds: 259200

@@ -27,8 +27,8 @@ class CustomAuthenticationProvider(
         return UsernamePasswordAuthenticationToken(user, password, listOf(SimpleGrantedAuthority(user.authority.name)))
     }
 
-    private fun verifyCredentials(user: User?, password: String) {
-        if (user == null || user.password != passwordEncoder.encode(password)) {
+    private fun verifyCredentials(user: User, password: String) {
+        if (!passwordEncoder.matches(password, user.password)) {
             throw BadCredentialsException("Invalid username or password")
         }
     }
@@ -38,8 +38,8 @@ class CustomAuthenticationProvider(
         user: User
     ) {
         val verificationCode = (authentication.details as CustomWebAuthenticationDetails).verificationCode
-        val securityCode = Totp(user.secret)
-        if (!securityCode.verify(verificationCode)) {
+        val totp = Totp(user.secret)
+        if (!totp.verify(verificationCode)) {
             throw BadCredentialsException("Invalid verification code")
         }
     }

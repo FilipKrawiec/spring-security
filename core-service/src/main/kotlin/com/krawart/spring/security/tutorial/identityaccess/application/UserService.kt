@@ -6,6 +6,7 @@ import com.krawart.spring.security.tutorial.identityaccess.application.command.V
 import com.krawart.spring.security.tutorial.identityaccess.domain.*
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.EmailAlreadyUsedException
 import com.krawart.spring.security.tutorial.identityaccess.domain.exception.VerificationTokenExpiredException
+import org.jboss.aerogear.security.otp.api.Base32
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
@@ -50,7 +51,7 @@ class UserService(
                 id = UUID.randomUUID(),
                 email = command.email,
                 password = passwordEncoder.encode(command.password),
-                secret = null,
+                secret = Base32.random(),
                 enabled = false,
                 authority = Authority.USER
             )

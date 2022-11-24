@@ -15,5 +15,5 @@ class CustomWebAuthenticationDetailsSource : AuthenticationDetailsSource<HttpSer
 
 data class CustomWebAuthenticationDetails(
     val context: HttpServletRequest,
-    val verificationCode: String = context.getParameter("code"),
+    val verificationCode: String? = context.getParameter("code"),
 ) : WebAuthenticationDetails(context)

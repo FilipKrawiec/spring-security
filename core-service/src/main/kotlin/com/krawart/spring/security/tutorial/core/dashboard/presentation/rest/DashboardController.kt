@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class DashboardController {
 
     @GetMapping
-    @PreAuthorize("isAdmin()")
+    @PreAuthorize("isAuthenticated()")
     fun dashboardPage(): String = "authenticated"
 
 }

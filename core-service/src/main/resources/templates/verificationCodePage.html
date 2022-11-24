@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+  <head th:replace="layout/head :: head('Sign up')"></head>
+
+  <body
+    class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center bg-light"
+  >
+    <div class="card text-center px-2 py-3 mb-3" style="width: 20rem">
+      <h1>Sign up</h1>
+      <p>Please fill all fields</p>
+
+      <div class="card-body">
+        <input type="hidden" id="username" th:value="${user.email}" />
+        <div id="qr">
+          <p>
+            Scan this Barcode using Google Authenticator app on your phone to
+            use it later in login
+          </p>
+        </div>
+
+        <a href="/login" class="btn btn-primary">Go to login page</a>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function () {
+            getQRCode();
+          });
+
+          function getQRCode() {
+            $.get("/code?username=" + $("#username").val(), function (data) {
+              $("#qr").append('<img alt="QR-Code" src="' + data.url + '" />');
+            });
+          }
+        </script>
+      </div>
+    </div>
+    <div th:if="${message}" th:text="${message}" class="text-success">
+      Message
+    </div>
+  </body>
+</html>

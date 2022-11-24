@@ -42,7 +42,7 @@ class RegistrationController(
             return ModelAndView("registrationPage", "body", body)
         }
 
-        return ModelAndView("redirect:/login")
+        return ModelAndView("verificationCodePage", "user", body)
     }
 
     @GetMapping("registration-confirmation")
